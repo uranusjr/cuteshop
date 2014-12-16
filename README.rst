@@ -24,7 +24,8 @@ What is Cuteshop?
 Short Version
 -------------
 
-It’s like CocoaPods, but for Qt (qmake-based) projects, if you know what it is.
+It’s like CocoaPods, but for Qt (qmake-based) projects, if you know what that
+means.
 
 Long Version
 -------------
