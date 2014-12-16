@@ -1,0 +1,8 @@
+name: qcli
+source:
+    http: https://github.com/bimetek/qcli/archive/master.zip
+project:
+    sources: "src/*.cpp"
+    headers: "src/*.h"
+    qt: core
+public_headers: "src/*.h"
