@@ -15,7 +15,7 @@ public_headers_dir.target = ../../include/{{ name }}
 public_headers.commands = \
     $$COPY \
     {%- for f in public_headers %}
-    {{ f }} \
+    $$PWD/{{ f }} \
     {%- endfor %}
     ../../include/{{ name }}
 public_headers.depends = public_headers_dir
