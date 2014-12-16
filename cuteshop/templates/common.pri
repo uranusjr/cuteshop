@@ -1,9 +1,7 @@
 win32 {
-    COPY = robocopy /s /e /y
     MKDIR = mkdir
 }
 else {
-    COPY = cp -r
     MKDIR = mkdir -p
 }
 
