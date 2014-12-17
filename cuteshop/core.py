@@ -47,6 +47,7 @@ def run(rulefile=None):
         os.makedirs(prefix)
     with change_working_directory(DEFAULT_INSTALL_PREFIX):
         generate_common_includes()
+        obsolete_packages = set(os.listdir('src'))
     package_names = []
     for info in rules['packages']:
         package = Package(info)
@@ -54,6 +55,12 @@ def run(rulefile=None):
             os.path.join(PACKAGE_SOURCE_CONTAINER, package.name)
         )
         package.install(prefix)
-    # TODO: Uninstall obsolete packages.
+        try:
+            obsolete_packages.remove(prefix)
+        except KeyError:
+            pass    # Ingore unexisted packages.
+    for name in obsolete_packages:
+        package = Package(name)
+        package.uninstall(DEFAULT_INSTALL_PREFIX)
     with change_working_directory(DEFAULT_INSTALL_PREFIX):
         generate_aggregated_project(package_names)

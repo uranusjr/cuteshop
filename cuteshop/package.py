@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 import glob
 import json
 import os
+import shutil
 
 import six
 import yaml
@@ -115,3 +116,4 @@ class Package(object):
         path = os.path.join(prefix, PACKAGE_SOURCE_CONTAINER, self.name)
         if os.path.exists(path):
             logger.info('Uninstalling {name}'.format(name=self.name))
+            shutil.rmtree(path)
