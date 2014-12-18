@@ -14,9 +14,10 @@ public_headers_dir.commands = $$MKDIR ../../include/{{ name }}
 public_headers_dir.target = ../../include/{{ name }}
 win32 {
     public_headers.commands = \
-        robocopy ../../include/{{ name }} /nosd /njh /njs /s /e \
         {%- for f in public_headers %}
-        $$PWD/{{ f }} \
+        xcopy $$shell_path($$PWD/{{ f }}) \
+        $$shell_path(../../include/{{ name }}) /q /y > nul
+        {%- if not loop.last %} && \{% endif %}
         {%- endfor %}
 }
 else {
