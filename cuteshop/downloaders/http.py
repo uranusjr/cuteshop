@@ -15,7 +15,7 @@ from .base import DOWNLOAD_CONTAINER
 
 COMPRESS_FORMATS = {
     '.zip': lambda fileobj: zipfile.ZipFile(file=fileobj),
-    '.gz': tarfile.TarFile,
+    '.gz': lambda fileobj: tarfile.open(fileobj=fileobj, mode='r:gz'),
 }
 
 
