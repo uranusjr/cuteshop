@@ -56,10 +56,12 @@ def run(rulefile=None):
         )
         package.install(prefix)
         try:
-            obsolete_packages.remove(prefix)
+            obsolete_packages.remove(package.name)
         except KeyError:
             pass    # Ingore unexisted packages.
     for name in obsolete_packages:
+        if not os.path.isdir(name):
+            continue
         package = Package(name)
         package.uninstall(DEFAULT_INSTALL_PREFIX)
     with change_working_directory(DEFAULT_INSTALL_PREFIX):
