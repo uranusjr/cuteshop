@@ -1,0 +1,25 @@
+name: libyaml
+source:
+    http: http://pyyaml.org/download/libyaml/yaml-0.1.5.tar.gz
+project:
+    sources: "src/*.c"
+    headers:
+        - "include/*.h"
+        - "src/*.h"
+    defines: HAVE_CONFIG_H
+    includepath: include
+    target: yaml
+project_extra: |
+    win32 {
+        INCLUDEPATH += src/win32
+    }
+    else {
+        INCLUDEPATH += src
+
+        config.target = src/config.h
+        config.commands = cd $$PWD/src && ./configure
+
+        QMAKE_EXTRA_TARGETS += src/config.h
+        PRE_TARGETDEPS += src/config.h
+    }
+public_headers: "include/*.h"
