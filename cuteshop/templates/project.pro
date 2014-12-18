@@ -2,11 +2,21 @@ include(../../common.pri)
 
 QT = {{ ' '.join(qt) }}
 
-TARGET = {{ name }}
+TARGET = {{ target }}
 
 # Disable all warnings.
 # TODO: Make it configurable
 QMAKE_CFLAGS_WARN_ON =
+
+{% if defines -%}
+DEFINES += \
+    {{ ' \\\n    '.join(defines) }}
+{%- endif %}
+
+{% if includepath -%}
+INCLUDEPATH += \
+    {{ ' \\\n    '.join(includepath) }}
+{%- endif %}
 
 {% if public_headers -%}
 # Header installations.
@@ -25,14 +35,14 @@ POST_TARGETDEPS += public_headers
 
 {% if sources -%}
 SOURCES += \
-    {%- for f in sources %}
-    {{ f }}{% if not loop.last %} \{% endif %}
-    {%- endfor %}
+    {{ '\\\n    '.join(sources) }}
 {%- endif %}
 
 {% if headers -%}
 HEADERS += \
-    {%- for f in headers %}
-    {{ f }}{% if not loop.last %} \{% endif %}
-    {%- endfor %}
+    {{ '\\\n    '.join(headers) }}
 {%- endif %}
+
+{% if extra -%}
+{{ extra }}
+{% endif -%}

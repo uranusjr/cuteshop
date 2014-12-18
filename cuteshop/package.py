@@ -95,9 +95,15 @@ class Package(object):
         settings.update({
             'name': self.name,
             'qt': get_list(project_spec, 'qt'),
+            'defines': get_list(project_spec, 'defines'),
+            'includepath': process_file_list(
+                get_list(project_spec, 'includepath'),
+            ),
             'public_headers': get_list(
                 project_spec, 'public_headers', default=settings['headers'],
             ),
+            'extra': self.spec.get('project_extra', ''),
+            'target': project_spec.get('target', self.name),
         })
         template = get_template('project.pro')
         result = template.render(**settings)
