@@ -100,7 +100,7 @@ class Package(object):
                 get_list(project_spec, 'includepath'),
             ),
             'public_headers': process_file_list(get_list(
-                self.spec, 'public_headers', default=settings['headers'],
+                self.spec, 'public_headers', default=project_spec['headers'],
             )),
             'extra': self.spec.get('project_extra', ''),
             'target': project_spec.get('target', self.name),
