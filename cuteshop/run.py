@@ -47,7 +47,10 @@ def run(rulefile=None):
         os.makedirs(prefix)
     with change_working_directory(DEFAULT_INSTALL_PREFIX):
         generate_common_includes()
-        obsolete_packages = set(os.listdir('src'))
+        if os.path.isdir('src'):
+            obsolete_packages = set(os.listdir('src'))
+        else:
+            obsolete_packages = set()
     package_names = []
     for info in rules['packages']:
         package = Package(info)
