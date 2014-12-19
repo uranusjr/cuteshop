@@ -8,17 +8,20 @@ TARGET = {{ target }}
 # TODO: Make it configurable
 QMAKE_CFLAGS_WARN_ON =
 
-{% if defines -%}
+{%- if defines %}
+
 DEFINES += \
     {{ ' \\\n    '.join(defines) }}
-{%- endif %}
 
-{% if includepath -%}
+{%- endif %}
+{%- if includepath %}
+
 INCLUDEPATH += \
     {{ ' \\\n    '.join(includepath) }}
-{%- endif %}
 
-{% if public_headers -%}
+{%- endif %}
+{%- if public_headers %}
+
 # Header installations.
 public_headers_dir.commands = $$MKDIR ../../include/{{ name }}
 public_headers_dir.target = ../../include/{{ name }}
@@ -31,18 +34,19 @@ public_headers.commands = \
 public_headers.depends = public_headers_dir
 QMAKE_EXTRA_TARGETS += public_headers_dir public_headers
 POST_TARGETDEPS += public_headers
-{%- endif %}
 
-{% if sources -%}
+{%- endif %}
+{%- if sources %}
+
 SOURCES += \
     {{ '\\\n    '.join(sources) }}
-{%- endif %}
 
-{% if headers -%}
+{%- endif %}
+{%- if headers %}
+
 HEADERS += \
     {{ '\\\n    '.join(headers) }}
+
 {%- endif %}
 
-{% if extra -%}
 {{ extra }}
-{% endif -%}
