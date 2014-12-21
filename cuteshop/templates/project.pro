@@ -5,7 +5,7 @@ QT = {{ ' '.join(qt) }}
 TARGET = {{ target }}
 
 # Disable all warnings.
-# TODO: Make it configurable
+{#- TODO: Make it configurable #}
 QMAKE_CFLAGS_WARN_ON =
 
 {%- if defines %}
