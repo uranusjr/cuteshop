@@ -48,5 +48,14 @@ HEADERS += \
     {{ '\\\n    '.join(headers) }}
 
 {%- endif %}
+{%- if forms %}
+
+FORMS += \
+    {{ '\\\n    '.join(forms) }}
+
+{%- endif %}
+{%- if extra %}
 
 {{ extra }}
+
+{%- endif -%}
