@@ -95,12 +95,14 @@ class Package(object):
         settings.update({
             'name': self.name,
             'qt': get_list(project_spec, 'qt'),
+            'config': get_list(project_spec, 'config'),
             'defines': get_list(project_spec, 'defines'),
             'includepath': process_file_list(
                 get_list(project_spec, 'includepath'),
             ),
             'public_headers': process_file_list(get_list(
-                self.spec, 'public_headers', default=project_spec['headers'],
+                self.spec, 'public_headers',
+                default=project_spec.get('headers', []),
             )),
             'extra': self.spec.get('project_extra', ''),
             'target': project_spec.get('target', self.name),

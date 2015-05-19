@@ -8,6 +8,12 @@ TARGET = {{ target }}
 {#- TODO: Make it configurable #}
 QMAKE_CFLAGS_WARN_ON =
 
+{%- if config %}
+
+CONFIG += \
+    {{ ' \\\n    '.join(config) }}
+
+{%- endif %}
 {%- if defines %}
 
 DEFINES += \
