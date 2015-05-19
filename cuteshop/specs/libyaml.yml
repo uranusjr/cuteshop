@@ -10,16 +10,5 @@ project:
     includepath: include
     target: yaml
 project_extra: |
-    win32 {
-        INCLUDEPATH += src/win32
-    }
-    else {
-        INCLUDEPATH += src
-
-        config.target = src/config.h
-        config.commands = cd $$PWD/src && ./configure
-
-        QMAKE_EXTRA_TARGETS += src/config.h
-        PRE_TARGETDEPS += src/config.h
-    }
+    INCLUDEPATH += src/win32
 public_headers: "include/*.h"
