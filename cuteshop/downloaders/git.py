@@ -17,7 +17,7 @@ def _checkout(name):
 def download(source_info):
     url = source_info['git']
     subprocess.call(
-        ('git', 'clone', url, DOWNLOAD_CONTAINER),
+        ('git', 'clone', '--recursive', url, DOWNLOAD_CONTAINER),
         stdout=DEVNULL, stderr=subprocess.STDOUT,
     )
     if 'tag' in source_info:
