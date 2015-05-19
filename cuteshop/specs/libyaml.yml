@@ -7,8 +7,8 @@ project:
         - "include/*.h"
         - "src/*.h"
     defines: HAVE_CONFIG_H
-    includepath: include
+    includepath:
+        - include
+        - win32
     target: yaml
-project_extra: |
-    INCLUDEPATH += src/win32
 public_headers: "include/*.h"
