@@ -39,19 +39,19 @@ POST_TARGETDEPS += public_headers
 {%- if sources %}
 
 SOURCES += \
-    {{ '\\\n    '.join(sources) }}
+    {{ ' \\\n    '.join(sources) }}
 
 {%- endif %}
 {%- if headers %}
 
 HEADERS += \
-    {{ '\\\n    '.join(headers) }}
+    {{ ' \\\n    '.join(headers) }}
 
 {%- endif %}
 {%- if forms %}
 
 FORMS += \
-    {{ '\\\n    '.join(forms) }}
+    {{ ' \\\n    '.join(forms) }}
 
 {%- endif %}
 {%- if extra %}
