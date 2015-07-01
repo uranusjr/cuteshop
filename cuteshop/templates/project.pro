@@ -29,7 +29,7 @@ INCLUDEPATH += \
 {%- if public_headers %}
 
 # Header installations.
-public_headers_dir.commands = $$MKDIR ../../include/{{ name }}
+public_headers_dir.commands = $$MKDIR $$system_path(../../include/{{ name }})
 public_headers_dir.target = ../../include/{{ name }}
 public_headers.commands = \
     {%- for f in public_headers %}
