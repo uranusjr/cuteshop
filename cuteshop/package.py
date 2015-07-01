@@ -43,6 +43,7 @@ class Package(object):
 
     SPEC_FORMATS = {
         '.json': json,
+        '.yaml': yaml,
         '.yml': yaml,
     }
     SPEC_DIR = os.path.join(
