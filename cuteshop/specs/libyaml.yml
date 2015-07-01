@@ -6,7 +6,7 @@ project:
     headers:
         - "include/*.h"
         - "src/*.h"
-    defines: HAVE_CONFIG_H
+    defines: HAVE_CONFIG_H YAML_DECLARE_STATIC
     includepath:
         - include
         - win32

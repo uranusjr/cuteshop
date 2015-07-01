@@ -5,15 +5,15 @@ project:
     sources:
         - "3rdparty/libyaml/src/*.c"
         - "src/*.cpp"
-    defines: HAVE_CONFIG_H
+    headers:
+        - src/qtyaml_global.h
+        - src/qyamldocument.h
+        - src/qyamlmapping.h
+        - src/qyamlsequence.h
+        - src/qyamlvalue.h
+    defines: HAVE_CONFIG_H YAML_DECLARE_STATIC
     includepath:
         - 3rdparty/libyaml/include
         - 3rdparty/libyaml/win32
     qt: core
     config: c++11
-public_headers:
-    - src/qtyaml_global.h
-    - src/qyamldocument.h
-    - src/qyamlmapping.h
-    - src/qyamlsequence.h
-    - src/qyamlvalue.h
