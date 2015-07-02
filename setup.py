@@ -18,7 +18,11 @@ setup(
     author_email='uranusjr@gmail.com',
     url='https://github.com/uranusjr/cuteshop',
     packages=find_packages(),
-    scripts=['scripts/cuteshop'],
+    entry_points={
+        'console_scripts': [
+            'cuteshop=cuteshop.run:main',
+        ],
+    },
     include_package_data=True,
     install_requires=requirements,
     license='MIT',

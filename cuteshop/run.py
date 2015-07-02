@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import print_function, unicode_literals
+import argparse
 import os
+import sys
 
 import yaml
 
@@ -69,3 +71,20 @@ def run(rulefile=None):
         package.uninstall(DEFAULT_INSTALL_PREFIX)
     with change_working_directory(DEFAULT_INSTALL_PREFIX):
         generate_aggregated_project(package_names)
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description='Manages depedencies for Qt project.',
+    )
+    parser.add_argument('-e', '--raise-exception', action='store_true')
+    namespace = parser.parse_args()
+
+    try:
+        run()
+    except Exception as e:
+        if namespace.raise_exception:
+            raise
+        else:
+            print('[!] {exception}'.format(exception=e))
+            sys.exit(1)
