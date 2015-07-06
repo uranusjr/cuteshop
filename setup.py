@@ -1,7 +1,22 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 from setuptools import find_packages, setup
+
+
+def get_version():
+    code = None
+    path = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)),
+        'cuteshop',
+        '__init__.py',
+    )
+    with open(path) as f:
+        for line in f:
+            if line.startswith('VERSION'):
+                code = line[len('VERSION = '):]
+    return '.'.join([str(c) for c in eval(code)])
 
 
 readme = open('README.rst').read()
@@ -11,7 +26,7 @@ requirements = open('requirements.txt').read().strip().split('\n')
 
 setup(
     name='cuteshop',
-    version='0.1.0',
+    version=get_version(),
     description='Package manager for Qt projects.',
     long_description='\n\n'.join([readme, history]),
     author='Tzu-ping Chung',
