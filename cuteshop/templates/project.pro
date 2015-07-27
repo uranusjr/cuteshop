@@ -60,6 +60,12 @@ FORMS += \
     {{ ' \\\n    '.join(forms) }}
 
 {%- endif %}
+{%- if resources %}
+
+RESOURCES += \
+    {{ ' \\\n    '.join(resources) }}
+
+{%- endif %}
 {%- if extra %}
 
 {{ extra }}

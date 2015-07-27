@@ -91,7 +91,7 @@ class Package(object):
         project_spec = self.spec.get('project', {})
         settings = {
             k: process_file_list(get_list(project_spec, k))
-            for k in ('sources', 'headers', 'forms',)
+            for k in ('sources', 'headers', 'forms', 'resources',)
         }
         settings.update({
             'name': self.name,
