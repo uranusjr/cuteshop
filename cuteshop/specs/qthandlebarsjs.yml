@@ -1,0 +1,10 @@
+name: qthandlebarsjs
+source:
+    git: https://github.com/uranusjr/qthandlebarsjs.git
+project:
+    sources: "src/*.cpp"
+    headers: "src/*.h"
+    resources: "src/*.qrc"
+    defines: QTHANDLEBARSJS_STATIC
+    qt: core qml
+    target: qthandlebarsjs
