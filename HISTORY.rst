@@ -4,6 +4,13 @@
 History
 =======
 
+0.2.1 (2015-09-20)
+---------------------
+
+* Add support for RESOURCES.
+* Add QtHandlebarsJS spec.
+
+
 0.2.0 (2015-07-07)
 ---------------------
 
