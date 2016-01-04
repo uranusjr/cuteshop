@@ -66,6 +66,12 @@ RESOURCES += \
     {{ ' \\\n    '.join(resources) }}
 
 {%- endif %}
+{%- if other_files %}
+
+OTHER_FILES += \
+    {{ ' \\\n    '.join(other_files) }}
+
+{%- endif %}
 {%- if extra %}
 
 {{ extra }}

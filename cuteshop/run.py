@@ -35,7 +35,7 @@ def generate_aggregated_project(packages):
         f.write(result)
 
 
-def run(rulefile=None):
+def run(extra_sources=None, rulefile=None):
     if rulefile is None:
         rulefile = RULEFILE_NAME
     if not hasattr(rulefile, 'read'):
@@ -55,7 +55,7 @@ def run(rulefile=None):
             obsolete_packages = set()
     package_names = []
     for info in rules['packages']:
-        package = Package(info)
+        package = Package(info, extra_sources=extra_sources)
         package_names.append(
             os.path.join(PACKAGE_SOURCE_CONTAINER, package.name)
         )
@@ -63,11 +63,11 @@ def run(rulefile=None):
         try:
             obsolete_packages.remove(package.name)
         except KeyError:
-            pass    # Ingore unexisted packages.
+            pass    # Ignore unexisted packages.
     for name in obsolete_packages:
         if not os.path.isdir(name):
             continue
-        package = Package(name)
+        package = Package(name, extra_sources=extra_sources)
         package.uninstall(DEFAULT_INSTALL_PREFIX)
     with change_working_directory(DEFAULT_INSTALL_PREFIX):
         generate_aggregated_project(package_names)
@@ -75,16 +75,19 @@ def run(rulefile=None):
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Manages depedencies for Qt project.',
+        description='Manages Qt project depedencies.',
     )
     parser.add_argument('-e', '--raise-exception', action='store_true')
+    parser.add_argument('-s', '--spec-source', action='append', nargs='+')
     namespace = parser.parse_args()
 
+    # Flatten nested lists.
+    extra_sources = [s for sl in namespace.spec_source for s in sl]
     try:
-        run()
+        run(extra_sources=extra_sources)
     except Exception as e:
         if namespace.raise_exception:
             raise
         else:
-            print('[!] {exception}'.format(exception=e))
+            print('[!] {exception}'.format(exception=e), file=sys.stderr)
             sys.exit(1)

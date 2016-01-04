@@ -52,23 +52,25 @@ class Package(object):
     )
     DOWNLOAD_METHODS = ('http', 'git',)
 
-    def __init__(self, info_or_name):
+    def __init__(self, info_or_name, extra_sources):
         if isinstance(info_or_name, six.string_types):
             name, options = info_or_name, []
         else:
             name, options = info_or_name.popitem()
         self.name = name
         self.options = options
+        self.spec_sources = list(extra_sources or []) + [self.SPEC_DIR]
 
     @cached_property
     def spec(self):
-        for ext in self.SPEC_FORMATS:
-            spec_path = os.path.join(self.SPEC_DIR, self.name.lower() + ext)
-            if os.path.exists(spec_path):
-                load = self.SPEC_FORMATS[ext].load
-                with open(spec_path) as f:
-                    info = load(f)
-                return info
+        for source in self.spec_sources:
+            for ext in self.SPEC_FORMATS:
+                spec_path = os.path.join(source, self.name.lower() + ext)
+                if os.path.exists(spec_path):
+                    load = self.SPEC_FORMATS[ext].load
+                    with open(spec_path) as f:
+                        info = load(f)
+                    return info
         raise SpecError(name=self.name, verb='find')
 
     def download(self):
@@ -91,7 +93,10 @@ class Package(object):
         project_spec = self.spec.get('project', {})
         settings = {
             k: process_file_list(get_list(project_spec, k))
-            for k in ('sources', 'headers', 'forms', 'resources',)
+            for k in (
+                'sources', 'headers',
+                'forms', 'resources', 'other_files',
+            )
         }
         settings.update({
             'name': self.name,
