@@ -4,6 +4,14 @@
 History
 =======
 
+0.3.0 (2016-01-04)
+---------------------
+
+* Add option for additional spec sources.
+* Add support for OTHER_FILES.
+* Minor wording fixes.
+
+
 0.2.1 (2015-09-20)
 ---------------------
 
