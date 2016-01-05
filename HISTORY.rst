@@ -4,6 +4,13 @@
 History
 =======
 
+0.3.1 (2016-01-05)
+---------------------
+
+* Git download plan now raises an exception on error.
+* Fix error caused by missing spec-source option.
+
+
 0.3.0 (2016-01-04)
 ---------------------
 
