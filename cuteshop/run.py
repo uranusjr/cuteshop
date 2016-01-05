@@ -78,7 +78,10 @@ def main():
         description='Manages Qt project depedencies.',
     )
     parser.add_argument('-e', '--raise-exception', action='store_true')
-    parser.add_argument('-s', '--spec-source', action='append', nargs='+')
+    parser.add_argument(
+        '-s', '--spec-source',
+        action='append', nargs='+', default=[],
+    )
     namespace = parser.parse_args()
 
     # Flatten nested lists.
