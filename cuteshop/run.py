@@ -15,6 +15,8 @@ from .utils import change_working_directory, get_logger, get_template
 RULEFILE_NAME = 'Shopfile'
 DEFAULT_INSTALL_PREFIX = '3rdparty'
 
+EXTRA_SPEC_SOURCES_ENVIRON = 'CUTESHOP_EXTRA_SPEC_SOURCES'
+
 logger = get_logger(__file__)
 
 
@@ -33,6 +35,17 @@ def generate_aggregated_project(packages):
     result = template.render(packages=packages)
     with open(name, 'w') as f:
         f.write(result)
+
+
+def build_sources_from_namespace(namespace):
+    # Flatten nested lists.
+    return [s for sl in namespace.spec_source for s in sl]
+
+
+def build_sources_from_env():
+    paths = os.getenv(EXTRA_SPEC_SOURCES_ENVIRON, '').split(':')
+    paths = [os.path.abspath(os.path.expanduser(path)) for path in paths]
+    return paths
 
 
 def run(extra_sources=None, rulefile=None):
@@ -84,8 +97,10 @@ def main():
     )
     namespace = parser.parse_args()
 
-    # Flatten nested lists.
-    extra_sources = [s for sl in namespace.spec_source for s in sl]
+    extra_sources = (
+        build_sources_from_namespace(namespace)
+        + build_sources_from_env()
+    )
     try:
         run(extra_sources=extra_sources)
     except Exception as e:
