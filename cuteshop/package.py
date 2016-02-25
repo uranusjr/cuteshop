@@ -99,6 +99,7 @@ class Package(object):
             )
         }
         settings.update({
+            'template': self.spec.get('template', 'lib'),
             'name': self.name,
             'qt': get_list(project_spec, 'qt'),
             'config': get_list(project_spec, 'config'),

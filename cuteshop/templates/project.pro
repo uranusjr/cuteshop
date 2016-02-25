@@ -1,5 +1,11 @@
 include(../../common.pri)
 
+TEMPLATE = {{ template }}
+
+{%- if template == 'lib' %}
+
+CONFIG += staticlib
+
 QT = {{ ' '.join(qt) }}
 
 TARGET = {{ target }}
@@ -8,6 +14,7 @@ TARGET = {{ target }}
 {#- TODO: Make it configurable #}
 QMAKE_CFLAGS_WARN_ON =
 
+{%- endif %}
 {%- if config %}
 
 CONFIG += \

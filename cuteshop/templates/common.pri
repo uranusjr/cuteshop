@@ -7,9 +7,6 @@ else {
     COPY = cp
 }
 
-TEMPLATE = lib
-CONFIG += staticlib
-
 INCLUDEPATH += build
 
 OBJECTS_DIR = build
