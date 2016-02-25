@@ -1,0 +1,9 @@
+name: qtcollections
+template: subdirs
+source:
+    git: https://github.com/uranusjr/qtcollections.git
+project:
+    headers: "src/*.h"
+    defines: QTCOLLECTIONS_STATIC
+    qt: core
+    target: qtcollections
