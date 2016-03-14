@@ -1,5 +1,5 @@
 name: qtcollections
-template: subdirs
+template: lib
 source:
     git: https://github.com/uranusjr/qtcollections.git
 project:
