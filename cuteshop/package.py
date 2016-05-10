@@ -24,7 +24,10 @@ empty = object()
 
 
 def process_file_list(file_list):
-    expand = lambda p: os.path.join(downloaders.DOWNLOAD_CONTAINER, p)
+
+    def expand(p):
+        return os.path.join(downloaders.DOWNLOAD_CONTAINER, p)
+
     return sum((glob.glob(expand(p)) for p in file_list), [])
 
 
