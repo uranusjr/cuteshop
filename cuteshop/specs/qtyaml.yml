@@ -1,6 +1,6 @@
 name: qtyaml
 source:
-    git: https://github.com/uranusjr/qtyaml.git
+    http: https://github.com/uranusjr/qtyaml/archive/master.zip
 project:
     sources:
         - "3rdparty/libyaml/src/*.c"
