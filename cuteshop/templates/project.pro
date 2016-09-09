@@ -40,8 +40,8 @@ public_headers_dir.commands = $$MKDIR $$system_path(../../include/{{ name }})
 public_headers_dir.target = ../../include/{{ name }}
 public_headers.commands = \
     {%- for f in public_headers %}
-    $(COPY_FILE) $$shell_path($$PWD/{{ f }}) \
-    $$shell_path(../../include/{{ name }})
+    $(COPY_FILE) \"$$shell_path($$PWD/{{ f }})\" \
+    \"$$shell_path(../../include/{{ name }})\"
     {%- if not loop.last %} && \{% endif %}
     {%- endfor %}
 public_headers.depends = public_headers_dir
