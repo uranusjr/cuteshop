@@ -101,6 +101,17 @@ class Package(object):
                 'forms', 'resources', 'other_files',
             )
         }
+
+        public_header_files = process_file_list(get_list(
+            self.spec, 'public_headers',
+            default=project_spec.get('headers', []),
+        ))
+        common_header_prefix = os.path.commonpath(public_header_files)
+        public_headers = [
+            (f, os.path.relpath(f, common_header_prefix))
+            for f in public_header_files
+        ]
+
         settings.update({
             'template': self.spec.get('template', 'lib'),
             'name': self.name,
@@ -110,13 +121,14 @@ class Package(object):
             'includepath': process_file_list(
                 get_list(project_spec, 'includepath'),
             ),
-            'public_headers': process_file_list(get_list(
-                self.spec, 'public_headers',
-                default=project_spec.get('headers', []),
-            )),
+            'public_header_dirs': {
+                os.path.dirname(f) for _, f in public_headers
+            },
+            'public_headers': public_headers,
             'extra': self.spec.get('project_extra', ''),
             'target': project_spec.get('target', self.name),
         })
+
         template = get_template('project.pro')
         result = template.render(**settings)
         with open(self.name + '.pro', 'w') as f:

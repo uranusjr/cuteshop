@@ -36,16 +36,16 @@ INCLUDEPATH += \
 {%- if public_headers %}
 
 # Header installations.
-public_headers_dir.commands = $$MKDIR $$system_path(../../include/{{ name }})
-public_headers_dir.target = ../../include/{{ name }}
 public_headers.commands = \
-    {%- for f in public_headers %}
-    $(COPY_FILE) \"$$shell_path($$PWD/{{ f }})\" \
-    \"$$shell_path(../../include/{{ name }})\"
+    {%- for dir in public_header_dirs %}
+    $$MKDIR $$system_path(../../include/{{ name }}/{{ dir }}) && \
+    {%- endfor %}
+    {%- for source, target in public_headers %}
+    $(COPY_FILE) \"$$shell_path($$PWD/{{ source }})\" \
+    \"$$shell_path(../../include/{{ name }}/{{ target }})\"
     {%- if not loop.last %} && \{% endif %}
     {%- endfor %}
-public_headers.depends = public_headers_dir
-QMAKE_EXTRA_TARGETS += public_headers_dir public_headers
+QMAKE_EXTRA_TARGETS += public_headers
 POST_TARGETDEPS += public_headers
 
 {%- endif %}
