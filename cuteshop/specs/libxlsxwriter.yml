@@ -1,0 +1,13 @@
+name: libxlsxwriter
+source:
+    http: >-
+        https://github.com/jmcnamara/libxlsxwriter/archive/RELEASE_0.8.4.tar.gz
+project:
+    sources: "src/*.c"
+    includepath:
+        - include
+    target: libxlsxwriter
+public_headers:
+    - "include/*.h"
+    - "include/xlsxwriter/*.h"
+    - "include/xlsxwriter/third_party/*.h"
