@@ -6,7 +6,7 @@ project:
     sources: "src/*.c"
     includepath:
         - include
-    target: libxlsxwriter
+    target: xlsxwriter
 public_headers:
     - "include/*.h"
     - "include/xlsxwriter/*.h"
