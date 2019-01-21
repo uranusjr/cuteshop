@@ -4,6 +4,18 @@
 History
 =======
 
+0.4.0 (2019-01-21)
+---------------------
+
+* Add syntax support to exclude files from a glob pattern.
+* Improve directory creation to support nested include structure.
+* Add support to load extra sources form environment variables.
+* Add support to non-lib projects (i.e. header-only).
+* Fix templating with spaces in path.
+* Add QtCollections spec.
+* Add LibXLSXWriter spec.
+
+
 0.3.1 (2016-01-05)
 ---------------------
 
