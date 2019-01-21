@@ -3,11 +3,19 @@ source:
     http: >-
         https://github.com/jmcnamara/libxlsxwriter/archive/RELEASE_0.8.4.tar.gz
 project:
-    sources: "src/*.c"
+    sources:
+        - "src/*.c"
+        - pattern: "third_party/minizip/*.c"
+          exclude: ["third_party/minizip/iowin32.c"]
+        - "third_party/tmpfileplus/*.c"
     includepath:
         - include
+        - third_party
     target: xlsxwriter
 public_headers:
     - "include/*.h"
     - "include/xlsxwriter/*.h"
-    - "include/xlsxwriter/third_party/*.h"
+project_extra: |
+    win32 {
+        SOURCES += src/third_party/minizip/iowin32.c
+    }

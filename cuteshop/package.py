@@ -26,9 +26,29 @@ empty = object()
 def process_file_list(file_list):
 
     def expand(p):
-        return os.path.join(downloaders.DOWNLOAD_CONTAINER, p)
+        return
 
-    return sum((glob.glob(expand(p)) for p in file_list), [])
+    files = []
+    for p in file_list:
+        if isinstance(p, six.string_types):
+            pattern = p
+            exclude = []
+        else:
+            pattern = p['pattern']
+            exclude = p.get('exclude', [])
+            if isinstance(exclude, six.string_types):
+                exclude = [exclude]
+        exclude = {
+            os.path.join(downloaders.DOWNLOAD_CONTAINER, p)
+            for p in exclude
+        }
+        files.extend((
+            f for f in glob.glob(os.path.join(
+                downloaders.DOWNLOAD_CONTAINER, pattern,
+            ))
+            if f not in exclude
+        ))
+    return files
 
 
 def get_list(dic, key, default=empty):
