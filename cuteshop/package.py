@@ -3,6 +3,7 @@
 
 from __future__ import unicode_literals
 import glob
+import hashlib
 import itertools
 import json
 import os
@@ -149,7 +150,14 @@ class Package(object):
             'public_header_dirs': {
                 os.path.dirname(f) for _, f in public_headers
             },
-            'public_headers': public_headers,
+            'public_headers': {
+                (
+                    hashlib.sha256(source.encode('utf-8')).hexdigest()[:8],
+                    source,
+                    target,
+                )
+                for source, target in public_headers
+            },
             'extra': self.spec.get('project_extra', ''),
             'target': project_spec.get('target', self.name),
         })
