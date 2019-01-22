@@ -37,7 +37,6 @@ def iter_files_from_pattern(p):
         os.path.join(downloaders.DOWNLOAD_CONTAINER, p)
         for p in exclude
     }
-    print(os.path.abspath(os.path.join(downloaders.DOWNLOAD_CONTAINER, pattern)))
     for f in glob.glob(os.path.join(downloaders.DOWNLOAD_CONTAINER, pattern)):
         if f in exclude:
             continue
