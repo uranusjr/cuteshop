@@ -148,7 +148,8 @@ class Package(object):
                 get_list(project_spec, 'includepath'),
             ),
             'public_header_dirs': {
-                os.path.dirname(f) for _, f in public_headers
+                (hashlib.sha256(p.encode('utf-8')).hexdigest()[:8], p)
+                for p in (os.path.dirname(f) for _, f in public_headers)
             },
             'public_headers': {
                 (
