@@ -3,6 +3,7 @@
 
 from __future__ import unicode_literals
 import glob
+import itertools
 import json
 import os
 import shutil
@@ -23,32 +24,30 @@ logger = get_logger(__file__)
 empty = object()
 
 
+def iter_files_from_pattern(p):
+    if isinstance(p, six.string_types):
+        pattern = p
+        exclude = []
+    else:
+        pattern = p['pattern']
+        exclude = p.get('exclude', [])
+        if isinstance(exclude, six.string_types):
+            exclude = [exclude]
+    exclude = {
+        os.path.join(downloaders.DOWNLOAD_CONTAINER, p)
+        for p in exclude
+    }
+    print(os.path.abspath(os.path.join(downloaders.DOWNLOAD_CONTAINER, pattern)))
+    for f in glob.glob(os.path.join(downloaders.DOWNLOAD_CONTAINER, pattern)):
+        if f in exclude:
+            continue
+        yield f
+
+
 def process_file_list(file_list):
-
-    def expand(p):
-        return
-
-    files = []
-    for p in file_list:
-        if isinstance(p, six.string_types):
-            pattern = p
-            exclude = []
-        else:
-            pattern = p['pattern']
-            exclude = p.get('exclude', [])
-            if isinstance(exclude, six.string_types):
-                exclude = [exclude]
-        exclude = {
-            os.path.join(downloaders.DOWNLOAD_CONTAINER, p)
-            for p in exclude
-        }
-        files.extend((
-            f for f in glob.glob(os.path.join(
-                downloaders.DOWNLOAD_CONTAINER, pattern,
-            ))
-            if f not in exclude
-        ))
-    return files
+    return list(itertools.chain.from_iterable(
+        iter_files_from_pattern(p) for p in file_list
+    ))
 
 
 def get_list(dic, key, default=empty):
@@ -122,15 +121,22 @@ class Package(object):
             )
         }
 
-        public_header_files = process_file_list(get_list(
+        public_header_entries = get_list(
             self.spec, 'public_headers',
             default=project_spec.get('headers', []),
-        ))
-        common_header_prefix = os.path.commonpath(public_header_files)
-        public_headers = [
-            (f, os.path.relpath(f, common_header_prefix))
-            for f in public_header_files
-        ]
+        )
+        public_headers = []
+        for entry in public_header_entries:
+            if isinstance(entry, dict) and 'prefix' in entry:
+                prefix = os.path.join(
+                    downloaders.DOWNLOAD_CONTAINER, entry['prefix'],
+                )
+            else:
+                prefix = None
+            for f in iter_files_from_pattern(entry):
+                if prefix is None:
+                    prefix = os.path.dirname(f)
+                public_headers.append((f, os.path.relpath(f, prefix)))
 
         settings.update({
             'template': self.spec.get('template', 'lib'),
