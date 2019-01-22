@@ -1,10 +1,12 @@
+MKDIR = mkdir
+
 win32 {
-    MKDIR = mkdir
     COPY = xcopy /e
+    TRUE = (exit 0)
 }
 else {
-    MKDIR = mkdir -p
     COPY = cp
+    TRUE = true
 }
 
 INCLUDEPATH += build

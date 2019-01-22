@@ -37,9 +37,8 @@ INCLUDEPATH += \
 
 # Header installations.
 {%- for target_name, dir in public_header_dirs %}
-{{ target_name }}.target = ../../include/{{ name }}/{{ dir }}
 {{ target_name }}.commands = \
-    $$MKDIR $$system_path(../../include/{{ name }}/{{ dir }})
+    $$MKDIR $$system_path(../../include/{{ name }}/{{ dir }}) || $$TRUE
 {%- endfor %}
 public_header_dirs.depends = \
     {%- for target_name, dir in public_header_dirs %}
