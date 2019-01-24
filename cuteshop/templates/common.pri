@@ -1,11 +1,13 @@
-MKDIR = mkdir
+
 
 win32 {
-    COPY = xcopy /e
+    COPY = xcopy /e /q
+    MKDIR = mkdir
     TRUE = (exit 0)
 }
 else {
     COPY = cp
+    MKDIR = mkdir -p
     TRUE = true
 }
 
