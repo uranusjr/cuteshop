@@ -4,6 +4,15 @@
 History
 =======
 
+0.5.0 (2019-01-24)
+---------------------
+
+* Support for per-pattern prefix in public header configurations.
+* Fix error on Windows when there are too many headers to copy.
+* Fix error on Windows when re-creating directories.
+* Add extra flags to make compilation log less verbose.
+
+
 0.4.0 (2019-01-21)
 ---------------------
 
